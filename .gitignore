@@ -1,7 +1,7 @@
 # Python
 **/__pycache__
 .venv
-out
+# out
 
 # MacOS
 .DS_Store
