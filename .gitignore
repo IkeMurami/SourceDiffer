@@ -1,0 +1,15 @@
+# Python
+**/__pycache__
+.venv
+out
+
+# MacOS
+.DS_Store
+
+# Linux – Exclude Dolphin files (KDE File manager)
+.directory
+
+# IDEA
+.idea/**
+# but keep VCS settings
+!.idea/vcs.xml
