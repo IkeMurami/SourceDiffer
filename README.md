@@ -16,6 +16,10 @@ Put the paths of sources to `source.list` and run differ:
 
 ```
 python main.py -i source.list -o out -r all
+
+or for get stats about file extensions:
+
+python main.py -i out -o stats.txt -s
 ```
 
 In rules directory you can add your rules and usage that later:
@@ -23,3 +27,8 @@ In rules directory you can add your rules and usage that later:
 ```
 python main.py -i source.list -o out -r mycustomrules
 ```
+
+# TODO
+
+Clean each commit in an exist Git-repository.
+

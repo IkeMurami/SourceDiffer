@@ -27,3 +27,36 @@ def ReadFile(path: Path) -> List[str]:
             line = stream.readline()
 
     return res
+
+
+def GetFileExtension(path: Path):
+    filename = path.name
+    parts = filename.split('.')
+    
+    if len(parts) == 1 \
+        or len(parts) == 2 and parts[0] == '':
+        # '.test' or 'test'
+        file_ext = ''
+    else:
+        # a.b.test.txt
+        file_ext = parts[-1]
+
+    return file_ext
+
+
+def GetStatisticFiles(path: Path):
+    """
+    Проходим по всем файлам и возращаем, какие есть расширения у этих файлов.
+    Необходимо для определения, что есть вообще в репозитории
+    """
+
+    res = dict()
+
+    for path in GetFiles(path):
+        file_ext = GetFileExtension(Path(path))
+        if file_ext not in res.keys():
+            res[file_ext] = []
+
+        res[file_ext].append(path)
+
+    return res

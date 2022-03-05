@@ -4,13 +4,18 @@ from pathlib import Path
 from git import Actor
 
 from core.differ import Differ
-from core.file import ReadFile, GetFiles
+from core.file import ReadFile, GetFiles, GetStatisticFiles
 
 
 """
 Usage:
 
 python main.py -i source.list -o out -r all
+
+or 
+
+python main.py -i out -o stats.txt -s
+
 """
 
 
@@ -20,6 +25,7 @@ def arg_parser():
     parser.add_argument('-i', '--input', help='List source paths (file path)', default='source.list', required=True)
     parser.add_argument('-o', '--output', help='Directory for the local git-repo', required=True)
     parser.add_argument('-r', '--rules', help='Cleaner\'s rules (ex see ./rules/: all,media,test,mock,...)', default='all', required=False)
+    parser.add_argument('-s', help='Get file statistics', default=False, required=False, action='store_true')
 
     parser.add_argument('--author', help='Author for git-repo', default='cleaner@example.com', required=False)
     parser.add_argument('--committer', help='Committer for git-repo', default='cleaner@example.com', required=False)
@@ -50,8 +56,18 @@ if __name__ == '__main__':
     args = arg_parser()
 
     assert Path(args.input).exists(), f'The file doesn\'t exist: {args.input}'
-    assert Path(args.output).exists(), f'The file doesn\'t exist: {args.output}'
 
+    if args.s:
+        stats = GetStatisticFiles(Path(args.input))
+        print(f'Extensions: {stats.keys()}')
+        
+        with Path(args.output).open(mode='w') as out_stream:
+            out_stream.write(str(stats))
+        
+        exit(0)
+
+    assert Path(args.output).exists(), f'The file doesn\'t exist: {args.output}'
+ 
     author = Actor(args.author.split('@')[0], args.author)
     committer = Actor(args.committer.split('@')[0], args.committer)
 
