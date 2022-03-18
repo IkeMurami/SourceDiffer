@@ -1,1 +1,3 @@
-GitPython
+gitdb==4.0.9
+GitPython==3.1.27
+smmap==5.0.0
